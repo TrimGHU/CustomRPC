@@ -43,6 +43,8 @@ public class NettyRpcExporter {
 							ChannelPipeline pipeline = ch.pipeline();
 							pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4));
 							pipeline.addLast(new LengthFieldPrepender(4));
+
+							// 此处必须定义传递内容的编码和解码，因为是对象。
 							pipeline.addLast("encoder", new ObjectEncoder());
 							pipeline.addLast("decoder",
 									new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.cacheDisabled(null)));
